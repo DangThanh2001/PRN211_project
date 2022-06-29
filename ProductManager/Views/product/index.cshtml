@@ -1,0 +1,22 @@
+﻿@using ProductManager.Models
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Product>
+
+    <table>
+        <thead>
+
+        </thead>
+        <tbody>
+        @foreach(Product o in Model)
+        {
+            <tr>
+                <td>@o.ProductName</td>
+            </tr>
+        }
+            
+        </tbody>
+    </table>
