@@ -63,3 +63,8 @@ F:\PRN211\ProjectPRN211\ProductManager\obj\Debug\net5.0\ProductManager.RazorCore
 F:\PRN211\ProjectPRN211\ProductManager\obj\Debug\net5.0\Razor\Views\product\index.cshtml.g.cs
 F:\PRN211\ProjectPRN211\ProductManager\obj\Debug\net5.0\ProductManager.RazorTargetAssemblyInfo.cs
 F:\PRN211\ProjectPRN211\ProductManager\obj\Debug\net5.0\ProductManager.Views.pdb
+F:\PRN211\ProjectPRN211\ProductManager\obj\Debug\net5.0\Razor\Views\product\_footer.cshtml.g.cs
+F:\PRN211\ProjectPRN211\ProductManager\obj\Debug\net5.0\Razor\Views\product\_Header.cshtml.g.cs
+F:\PRN211\ProjectPRN211\ProductManager\obj\Debug\net5.0\Razor\Views\product\_Menu.cshtml.g.cs
+F:\PRN211\ProjectPRN211\ProductManager\obj\Debug\net5.0\Razor\Views\product\detail.cshtml.g.cs
+F:\PRN211\ProjectPRN211\ProductManager\obj\Debug\net5.0\Razor\Views\Shared\exampleView.cshtml.g.cs

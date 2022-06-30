@@ -1,0 +1,49 @@
+﻿@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<nav class="navbar navbar-expand-lg bg-light ">
+	<div class="container-fluid">
+		<span class="navbar-brand" href="#">Menu</span>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNavDropdown">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link @(ViewBag.here.Equals("pro") ? "text-secondary":"")" aria-current="page" href="/Product/index">Product</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link @(ViewBag.here.Equals("comp") ? "text-secondary":"")" href="/Product/listCompany">Company</a>
+				</li>
+
+
+				<li class="nav-item">
+					<div class="float-right">
+						<form class="form-inline" action="/product/index" method="post">
+							<input type="hidden" />
+							<input class="form-control mr-sm-2" name="par1" type="search" value="@ViewBag.seacrh" placeholder="Search" aria-label="Search">
+							<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+						</form>
+					</div>
+				</li>
+				@*<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					Dropdown link
+					</a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+					<li><a class="dropdown-item" href="#">Action</a></li>
+					<li><a class="dropdown-item" href="#">Another action</a></li>
+					<li><a class="dropdown-item" href="#">Something else here</a></li>
+					</ul>
+					</li>*@
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<style>
+
+</style>

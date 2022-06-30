@@ -36,6 +36,14 @@ namespace ProductManager
                     pattern: "{controller=Product}/{action=Index}"
                     );
             });
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "pUp",
+                    pattern: "{controller=Product}/{action=Index}/{par1}"
+                    );
+            });
         }
     }
 }

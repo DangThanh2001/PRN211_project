@@ -79,15 +79,13 @@ namespace ProductManager.Models
 
                 entity.Property(e => e.ProductId).HasColumnName("ProductID");
 
-                entity.Property(e => e.CatId).HasColumnName("CatID");
-
                 entity.Property(e => e.ImportDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ProductName).HasMaxLength(50);
 
                 entity.Property(e => e.PublisherId).HasColumnName("PublisherID");
 
-                entity.HasOne(d => d.Publisher)
+                entity.HasOne(d => d.Publishing)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.PublisherId)
                     .OnDelete(DeleteBehavior.ClientSetNull)

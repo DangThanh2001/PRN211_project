@@ -1,0 +1,106 @@
+﻿@using ProductManager.Models
+@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Product
+
+@Html.Partial("_Header.cshtml")
+
+<body>
+	<div class="container-fluid">
+		<div class="row header">
+
+			<div class="text-center col-sm-12">
+				<h1>Comicket</h1>
+			</div>
+		</div>
+
+		@Html.Partial("_Menu.cshtml")
+		@*my work is here*@
+		<div class="container-fluid container-sm">
+			<div class="row">
+				<div class="col-sm-2">
+				</div>
+				<div class="col-sm-8 text-center">
+					<div class="row ">
+						<div class="col-sm-6 ">Product name</div>
+						<div class="col-sm-6 ">@Model.ProductName</div>
+
+					</div>
+					<hr>
+					<div class="row ">
+						<div class="col-sm-6 ">Quantities</div>
+						<div class="col-sm-6 ">@Model.Quantity</div>
+
+					</div>
+					<hr>
+					<div class="row ">
+						<div class="col-sm-6 ">Original Price</div>
+						<div class="col-sm-6 ">@Model.OriginalPrice $</div>
+					</div>
+					<hr>
+					<div class="row ">
+						<div class="col-sm-6 ">Sell Price</div>
+						<div class="col-sm-6 ">@Model.SellPrice $</div>
+					</div>
+					<hr>
+					<div class="row ">
+						<div class="col-sm-6 ">Status</div>
+						<div class="col-sm-6 ">
+							<span class="@(Model.Status == 1 ? "badge badge-success" : "badge badge-danger")">
+								@(Model.Status == 1 ? "Ready" : "Waiting")
+							</span>
+						</div>
+					</div>
+					<hr>
+					<div class="row ">
+						<div class="col-sm-6 ">Notes</div>
+						<div class="col-sm-6 ">@Model.Notes</div>
+					</div>
+					<hr>
+					<div class="row ">
+						<div class="col-sm-6 ">Import date</div>
+						<div class="col-sm-6 ">@Model.ImportDate.ToString("dd/MM/yyyy")</div>
+					</div>
+					<hr>
+					<div class="row ">
+						<div class="col-sm-6 ">Category</div>
+						<div class="col-sm-6 ">
+							@foreach (Category o in ViewBag.cate)
+							{
+								@o.CatName <br>
+							}
+						</div>
+					</div>
+					<hr>
+					<div class="row ">
+						<div class="col-sm-6 ">Publisher</div>
+						<div class="col-sm-6 ">@Model.Publishing.Name</div>
+					</div>
+					<hr>
+				</div>
+
+				<div class="col-sm-2">
+				</div>
+
+				
+
+			</div>
+
+			<div class="row text-center">
+					<div class="col-sm-12">
+						<a class="btn btn-primary" href="#">Update</a>
+					</div>
+				</div>
+		</div>
+
+		@Html.Partial("_footer.cshtml")
+
+
+	</div>
+
+
+</body>
+</html>
