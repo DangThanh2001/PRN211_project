@@ -6,7 +6,7 @@
 }
 @model Product
 
-@Html.Partial("_Header.cshtml")
+@await Html.PartialAsync("Header")
 
 <body>
 	<div class="container-fluid">
@@ -17,7 +17,7 @@
 			</div>
 		</div>
 
-		@Html.Partial("_Menu.cshtml")
+		@await Html.PartialAsync("Menu")
 		@*my work is here*@
 		<div class="container-fluid container-sm">
 			<div class="row">
@@ -96,7 +96,7 @@
 				</div>
 		</div>
 
-		@Html.Partial("_footer.cshtml")
+		@await Html.PartialAsync("footer")
 
 
 	</div>

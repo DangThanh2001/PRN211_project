@@ -3,7 +3,7 @@
 *@
 @{
 }
-@Html.Partial("_Header.cshtml")
+@await Html.PartialAsync("Header")
 
 <body>
 	<div class="container-fluid">
@@ -14,13 +14,13 @@
 			</div>
 		</div>
 
-		@Html.Partial("_Menu.cshtml")
+		@await Html.PartialAsync("Menu")
 		@*my work is here*@
 
 
 
-		@Html.Partial("_footer.cshtml")
 		
+		@await Html.PartialAsync("footer")
 	</div>
 
 	

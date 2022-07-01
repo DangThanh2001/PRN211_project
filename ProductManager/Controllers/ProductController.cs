@@ -20,29 +20,46 @@ namespace ProductManager.Controllers
         public IActionResult detail(int par1)
         {
             ViewBag.here = "pro";
-            Product p = dao.updateProduct(par1);
+            Product p = dao.viewProduct(par1);
             List<Category> cat = dao.viewCategoryByPro(par1);
             ViewBag.cate = cat;
             ViewBag.IDate = p.ImportDate.ToString("dd/MM/yyyy");
             return View(p);
         }
 
-        public string listCompany()
+        public IActionResult status(int par1)
         {
-            return "nothing yet";
+            Product pr = dao.viewProduct(par1);
+            dao.changeStatus(par1);
+            List<Product> products = dao.getALlProduct(pr.ProductName);
+            ViewBag.here = "pro";
+            ViewBag.seacrh = pr.ProductName;
+            return RedirectToAction("index", "product");
         }
 
-        public IActionResult search(string par1)
+        public IActionResult quantity(Product upPro)
         {
-            ViewBag.here = "pro";
-            if (string.IsNullOrEmpty(par1))
+            Product pr = dao.viewProduct(upPro.ProductId);
+            pr.Quantity = upPro.Quantity;
+            if(pr.Quantity > 0)
             {
-                List<Product> p = dao.searchByName(par1);
-                return RedirectToAction("index", new { par1 = p });
+                dao.updateProduct(pr);
             }
-            List<Product> products = dao.searchByName(par1);
-            return RedirectToAction("index", new { par1 = products });
-
+            if(pr.Quantity == 0)
+            {
+                pr.Status = 0;
+                dao.updateProduct(pr);
+            }
+            if(pr.Quantity < 0)
+            {
+                string mess = @"Man, please input positive interger pls";
+                ViewBag.mess = mess;
+                return RedirectToAction("index", "product");
+            }
+            List<Product> products = dao.getALlProduct(pr.ProductName);
+            ViewBag.here = "pro";
+            ViewBag.seacrh = pr.ProductName;
+            return RedirectToAction("index", "product");
         }
     }
 }

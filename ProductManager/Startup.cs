@@ -28,6 +28,7 @@ namespace ProductManager
             }
 
             app.UseRouting();
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {
@@ -42,6 +43,14 @@ namespace ProductManager
                 endpoints.MapControllerRoute(
                     name: "pUp",
                     pattern: "{controller=Product}/{action=Index}/{par1}"
+                    );
+            });
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "p2",
+                    pattern: "{controller=Product}/{action=Index}/{par1}/{par2}"
                     );
             });
         }

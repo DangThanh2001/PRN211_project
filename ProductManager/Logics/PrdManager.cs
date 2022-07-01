@@ -16,15 +16,19 @@ namespace ProductManager.Logics
         public List<Product> getALlProduct(string s)
         {
             context.PublishingHouses.ToList();
+
             if (string.IsNullOrEmpty(s))
                 return context.Products.ToList();
             else
+            {
+                s = s.Trim();
                 return context.Products.Where(x => x.ProductName.ToLower().Contains(s.ToLower())
                 || x.Publishing.Name.ToLower().Contains(s.ToLower())
                 ).ToList();
+            }
         }
 
-        public Product updateProduct(int id)
+        public Product viewProduct(int id)
         {
             try
             {
@@ -57,14 +61,45 @@ namespace ProductManager.Logics
             }
         }
 
-        public List<Product> searchByName(string par1)
+        public List<PublishingHouse> showAllCompany(string par1)
         {
             context.Products.ToList();
             context.PublishingHouses.ToList();
-            List<Product> a =
-            context.Products.Where(x => x.ProductName.ToLower().Contains(par1.ToLower())).ToList();
+            if (string.IsNullOrEmpty(par1))
+                return context.PublishingHouses.ToList();
+            else
+            {
+                par1 = par1.Trim();
+                return context.PublishingHouses
+                    .Where(x => x.Name.ToLower().Contains(par1.ToLower())
+                    || x.Address.ToLower().Contains(par1.ToLower())
+                    || x.Phone.ToLower().Contains(par1.ToLower())
+                    || x.Url.ToLower().Contains(par1.ToLower())
+                    ).ToList();
+            }
+        }
 
-            return a;
+        public void changeStatus(int id)
+        {
+            Product p = context.Products.Where(x => x.ProductId == id).FirstOrDefault();
+            if (p.Status == 0)
+            {
+                p.Status = 1;
+            }
+            else
+            {
+                p.Status = 0;
+            }
+            context.Products.Update(p);
+            context.SaveChanges();
+        }
+
+        public void updateProduct(Product p)
+        {
+            int a = p.ProductId;
+            int? b = p.Quantity;
+            context.Products.Update(p);
+            context.SaveChanges();
         }
     }
 }

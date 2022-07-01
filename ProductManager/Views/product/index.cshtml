@@ -6,7 +6,7 @@
 }
 @model List<Product>
 
-@Html.Partial("_Header.cshtml")
+@await Html.PartialAsync("Header")
 
 <body>
 	<div class="container-fluid">
@@ -17,7 +17,15 @@
 			</div>
 		</div>
 
-		@Html.Partial("_Menu.cshtml")
+		@await Html.PartialAsync("Menu")
+
+		@if (!string.IsNullOrEmpty(ViewBag.mess))
+		{
+			<div class="alert alert-danger text-center" role="alert">
+				@ViewBag.mess
+			</div>
+		}
+
 
 		<div class="row content">
 			<div class="col-sm-1">
@@ -43,10 +51,28 @@
 							@foreach (Product o in Model)
 							{
 								<tr>
-									<td scope="row">@o.ProductName</td>
+									<td scope="row"><a class="text-info" href="/Product/detail">@o.ProductName</a></td>
 									<td>
-										<input class="form-control" type="number" value="@o.Quantity"
-										   @(o.Status == 0 ? "readonly" : "") />
+										<form action="/product/quantity/@o.ProductId" method="post">
+											<div class="input-group mb-3">
+												<input type="hidden" name="upPro.ProductId" value="@o.ProductId">
+												<input type="number" class="form-control"
+												   name="UpPro.Quantity" value="@o.Quantity" aria-label=""
+												   aria-describedby="basic-addon2" min="0" max="9999999"
+												   @(o.Status == 0 ? "readonly" : "")>
+
+												<div class="input-group-append">
+													@if (o.Status == 1)
+													{
+														<input type="submit" class="btn btn-outline-success my-2 my-sm-0"
+													   value="Enter" id="basic-addon2">
+													}
+
+												</div>
+											</div>
+
+										</form>
+
 									</td>
 									<td>@o.OriginalPrice $</td>
 									<td>@o.SellPrice $</td>
@@ -56,13 +82,16 @@
 										</span>
 
 									</td>
-									<td>@o.Publishing.Name</td>
+									<td><a href="#">@o.Publishing.Name</a></td>
 									<td>
 										<a class="text-info" href="/Product/detail/@o.ProductId">Details</a>
 										<br>
-										<a class="text-info" href="#">Update</a>
+										<a class="text-info" href="/Product/status/@o.ProductId">Update</a>
 										<br>
-										<a class="@(o.Status == 1 ? "text-danger" : "text-success")" href="#">Change status</a>
+										@if(o.Quantity > 0)
+										{
+											<a class="@(o.Status == 1 ? "text-danger" : "text-success")" href="/product/status/@o.ProductId">Change status</a>
+										}
 									</td>
 								</tr>
 							}
@@ -75,10 +104,16 @@
 			</div>
 		</div>
 
-		@Html.Partial("_footer.cshtml")
-		
+		@*	@await Html.PartialAsync("footer")*@
+
 	</div>
 
-	
+	<style>
+		.row.content {
+			margin: 3em 0px;
+		}
+	</style>
+
 </body>
 </html>
+

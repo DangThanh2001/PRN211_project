@@ -1,0 +1,72 @@
+﻿@using ProductManager.Models
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<PublishingHouse>
+@await Html.PartialAsync("Header")
+
+<body>
+	<div class="container-fluid">
+		<div class="row header">
+
+			<div class="text-center col-sm-12">
+				<h1>Comicket</h1>
+			</div>
+		</div>
+
+		@await Html.PartialAsync("Menu")
+		@*my work is here*@
+
+		<div class="row content">
+			<div class="col-sm-1">
+			</div>
+			<div class="col-sm-10">
+				<div>
+
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">Name</th>
+								<th scope="col">Address</th>
+								<th scope="col">Phone</th>
+								<th scope="col">URL</th>
+								<th scope="col">Action</th>
+
+							</tr>
+						</thead>
+						<tbody>
+
+							@foreach (PublishingHouse o in Model)
+							{
+								<tr>
+									<td scope="row">@o.Name</td>
+									<td>
+										@o.Address
+									</td>
+									<td>@o.Phone </td>
+									<td>@o.Url </td>
+									<td>
+										<a class="text-info" href="/Product/detail/@o.PublisherId">Details</a>
+										<br>
+										<a class="text-info" href="#">Update</a>	
+									</td>
+								</tr>
+							}
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col-sm-1">
+			</div>
+		</div>
+
+		
+		@await Html.PartialAsync("footer")
+	</div>
+
+	
+</body>
+</html>
