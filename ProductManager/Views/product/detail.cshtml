@@ -13,14 +13,16 @@
 		<div class="row header">
 
 			<div class="text-center col-sm-12">
-				<h1>Comicket</h1>
+				<h1>
+					Sunflower
+				</h1>
 			</div>
 		</div>
 
 		@await Html.PartialAsync("Menu")
 		@*my work is here*@
 		<div class="container-fluid container-sm">
-			<div class="row">
+			<div class="row content">
 				<div class="col-sm-2">
 				</div>
 				<div class="col-sm-8 text-center">
@@ -85,22 +87,26 @@
 				<div class="col-sm-2">
 				</div>
 
-				
+
 
 			</div>
 
 			<div class="row text-center">
-					<div class="col-sm-12">
-						<a class="btn btn-primary" href="#">Update</a>
-					</div>
+				<div class="col-sm-12">
+					<a class="btn btn-primary" href="#">Update</a>
 				</div>
+			</div>
 		</div>
 
-		@await Html.PartialAsync("footer")
+		@*	@await Html.PartialAsync("footer")*@
 
 
 	</div>
-
+	<style>
+		a.btn.btn-primary {
+			margin-bottom: 1em;
+		}
+	</style>
 
 </body>
 </html>

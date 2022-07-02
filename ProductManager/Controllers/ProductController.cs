@@ -13,7 +13,12 @@ namespace ProductManager.Controllers
         {
             ViewBag.here = "pro";
             List<Product> products = dao.getALlProduct(par1);
+            if (string.IsNullOrEmpty(par1))
+                par1 = "";
             ViewBag.seacrh = par1;
+
+            List<PublishingHouse> allCom = dao.showAllCompany("");
+            ViewBag.allCom = allCom;
             return View(products);
         }
 
@@ -52,14 +57,27 @@ namespace ProductManager.Controllers
             }
             if(pr.Quantity < 0)
             {
-                string mess = @"Man, please input positive interger pls";
-                ViewBag.mess = mess;
+                
                 return RedirectToAction("index", "product");
             }
             List<Product> products = dao.getALlProduct(pr.ProductName);
             ViewBag.here = "pro";
             ViewBag.seacrh = pr.ProductName;
             return RedirectToAction("index", "product");
+        }
+
+        public IActionResult listStatus(int par1)
+        {
+            ViewBag.here = "pro";
+            ViewBag.seacrh = "";
+            ViewBag.stt = par1;
+            List<Product> products = dao.getPrdBystatus(par1);
+            List<PublishingHouse> allCom = dao.showAllCompany("");
+            ViewBag.allCom = allCom;
+            if (par1 == 0 || par1 == 1)
+                return View(products);
+            else
+                return RedirectToAction("index");
         }
     }
 }

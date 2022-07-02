@@ -24,7 +24,22 @@ namespace ProductManager.Logics
                 s = s.Trim();
                 return context.Products.Where(x => x.ProductName.ToLower().Contains(s.ToLower())
                 || x.Publishing.Name.ToLower().Contains(s.ToLower())
+                
                 ).ToList();
+            }
+        }
+
+        public List<Product> getPrdBystatus(int s)
+        {
+            context.PublishingHouses.ToList();
+
+            if (s == 1 || s==0)
+                return 
+            context.Products.Where(x => x.Status == s).ToList();
+            else
+            {
+                
+                return context.Products.ToList();
             }
         }
 

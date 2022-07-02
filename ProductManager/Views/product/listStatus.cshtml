@@ -43,8 +43,8 @@
 					<form action="/product/listStatus" method="post" >
 						<select name="par1" class="custom-select" onchange="this.form.submit()">
 						<option value="5">View all</option>
-						<option value="0">Waiting</option>
-						<option value="1">Ready</option>
+						<option value="0" @(ViewBag.stt == 0 ? "selected":"")>Waiting</option>
+						<option value="1" @(ViewBag.stt == 1 ? "selected":"")>Ready</option>
 						
 					</select>
 					</form>
