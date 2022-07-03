@@ -70,3 +70,4 @@ F:\PRN211\ProjectPRN211\ProductManager\obj\Debug\net5.0\Razor\Views\Shared\Heade
 F:\PRN211\ProjectPRN211\ProductManager\obj\Debug\net5.0\Razor\Views\Shared\Menu.cshtml.g.cs
 F:\PRN211\ProjectPRN211\ProductManager\obj\Debug\net5.0\Razor\Views\Shared\footer.cshtml.g.cs
 F:\PRN211\ProjectPRN211\ProductManager\obj\Debug\net5.0\Razor\Views\product\listStatus.cshtml.g.cs
+F:\PRN211\ProjectPRN211\ProductManager\obj\Debug\net5.0\Razor\Views\product\update.cshtml.g.cs

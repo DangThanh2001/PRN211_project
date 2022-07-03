@@ -79,5 +79,35 @@ namespace ProductManager.Controllers
             else
                 return RedirectToAction("index");
         }
+
+        public IActionResult update(int par1)
+        {
+            ViewBag.here = "pro";
+            ViewBag.ok = 1;
+            ViewBag.mess = "Please check your work before you submit";
+            List<PublishingHouse> pub = dao.showAllCompany("");
+            ViewBag.pub = pub;
+            Product p = dao.viewProduct(par1);
+            return View(p);
+        }
+
+        public IActionResult doupdate(Product updatePr)
+        {
+            ViewBag.here = "pro";
+            Product p = updatePr;
+            if (updatePr.Status > 0 && updatePr.Quantity <= 0)
+			{
+                ViewBag.ok = 0;
+                ViewBag.mess = "Your work has something not right... pls check again :< ";
+			}
+			else
+			{
+                ViewBag.ok = 1;
+                dao.updateProduct(updatePr);
+                ViewBag.mess = "Your work has done successfully";
+            }
+            ViewBag.pub = dao.showAllCompany("");
+            return View("/views/product/update.cshtml", p);
+        }
     }
 }

@@ -1,0 +1,105 @@
+﻿@using ProductManager.Models
+@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Product
+@await Html.PartialAsync("Header")
+
+<body>
+	<div class="container-fluid">
+		<div class="row header">
+			<div class="text-center col-sm-12">
+				<h1>Sunflower</h1>
+			</div>
+		</div>
+
+		@await Html.PartialAsync("Menu")
+		@*my work is here*@
+		<div class="row content">
+
+			<div class="col-sm-2"></div>
+			<div class="col-sm-8">
+				@if (ViewBag.ok == 1)
+				{
+					<div class="alert alert-success" id="alertdiv" role="alert">
+						@ViewBag.mess
+					</div>
+				}
+				else
+				{
+					<div class="alert alert-danger" id="alertdiv" role="alert">
+						@ViewBag.mess
+					</div>
+				}
+
+				<form action="/product/doupdate" method="post">
+					<div class="form-group">
+						<input type="hidden" name="updatePr.ProductId" value="@Model.ProductId">
+						<label for="proName">Product name:</label>
+						<input type="text" id="proName" class="form-control" placeholder="Product name" required name="updatePr.ProductName" value="@Model.ProductName">
+					</div>
+					<div class="form-group">
+						<label for="quan">Quantiti(es):</label>
+						<input type="number" id="quan" class="form-control" placeholder="Product quantities" min="0" max="999999" required name="updatePr.Quantity" value="@Model.Quantity">
+						<small id="quan" class="form-text text-muted"><i>Tips: </i>Please sure is your quantities must be larger than 0 if you want it to be ready</small>
+					</div>
+					<div class="form-group">
+						<label for="giaGoc">Original price:</label>
+						<input type="number" id="giaGoc" step="any" class="form-control" placeholder="Product quantities" min="0" max="999999" required name="updatePr.OriginalPrice" value="@Model.OriginalPrice">
+					</div>
+					<div class="form-group">
+						<label for="giaBan">Sell price:</label>
+						<input type="number" id="giaBan" step="any" class="form-control" placeholder="Product quantities" min="0" max="999999" required name="updatePr.SellPrice" value="@Model.SellPrice">
+					</div>
+					<div class="form-group">
+						<label for="status">Status:</label>
+						<span class="text-success"> <input type="radio" id="status1" name="updatePr.status" value="1" required @(Model.Status == 1 ? "checked":"")> <label for="status1">Ready</label> </span>
+						<span class="text-danger">	<input type="radio" id="status0" name="updatePr.status" value="0" required @(Model.Status == 0 ? "checked":"")> <label for="status0">Waiting</label> </span>
+					</div>
+					<div class="form-group">
+						<label for="date">Import date:</label>
+						<input type="date" id="date" class="form-control" required name="updatePr.ImportDate" value="@Model.ImportDate.ToString("yyyy-MM-dd")">
+					</div>
+
+					<div class="form-group">
+						<label for="company">company:</label>
+						<select class="form-control" id="company" name="updatePr.PublisherId">
+							@foreach (PublishingHouse item in ViewBag.pub)
+							{
+								<option value="@item.PublisherId" @(item.PublisherId == Model.PublisherId ? "selected":"")>@item.Name </option>
+							}
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="note">Notes:</label>
+						<textarea name="updatePr.Notes" id="note" class="form-control">@Model.Notes</textarea>
+					</div>
+
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</form>
+			</div>
+			<div class="col-sm-2"></div>
+		</div>
+
+		@*@await Html.PartialAsync("footer")*@
+	</div>
+	<style>
+		textarea#note {
+			height: 15em;
+		}
+	</style>
+
+	<script type="text/javascript">
+		// close the div in 5 secs
+		window.setTimeout("closeHelpDiv();", 5000);
+
+		function closeHelpDiv(){
+		document.getElementById("alertdiv").style.display=" none";
+		}
+	</script>
+
+</body>
+</html>

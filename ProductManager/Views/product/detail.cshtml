@@ -79,7 +79,7 @@
 					<hr>
 					<div class="row ">
 						<div class="col-sm-6 ">Publisher</div>
-						<div class="col-sm-6 ">@Model.Publishing.Name</div>
+						<div class="col-sm-6 "><a href="/company/detail/@Model.PublisherId">@Model.Publishing.Name</a></div>
 					</div>
 					<hr>
 				</div>
@@ -93,7 +93,7 @@
 
 			<div class="row text-center">
 				<div class="col-sm-12">
-					<a class="btn btn-primary" href="#">Update</a>
+					<a class="btn btn-primary" href="/Product/update/@Model.ProductId">Update</a>
 				</div>
 			</div>
 		</div>
