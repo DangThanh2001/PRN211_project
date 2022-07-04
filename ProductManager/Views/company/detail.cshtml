@@ -1,0 +1,83 @@
+﻿@using ProductManager.Models
+@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model PublishingHouse
+
+@await Html.PartialAsync("Header")
+
+<body>
+	<div class="container-fluid">
+		<div class="row header">
+
+			<div class="text-center col-sm-12">
+				<h1>
+					Sunflower
+				</h1>
+			</div>
+		</div>
+
+		@await Html.PartialAsync("Menu")
+		@*my work is here*@
+		<div class="container-fluid container-sm">
+			<div class="row content">
+				<div class="col-sm-2">
+				</div>
+				<div class="col-sm-8 text-center">
+					<div class="row ">
+						<div class="col-sm-6 ">Company name</div>
+						<div class="col-sm-6 ">@Model.Name</div>
+
+					</div>
+					<hr>
+					<div class="row ">
+						<div class="col-sm-6 ">Address</div>
+						<div class="col-sm-6 ">@Model.Address</div>
+
+					</div>
+					<hr>
+					<div class="row ">
+						<div class="col-sm-6 ">Phone</div>
+						<div class="col-sm-6 ">@Model.Phone </div>
+					</div>
+					<hr>
+					<div class="row ">
+						<div class="col-sm-6 ">Url</div>
+						<div class="col-sm-6 ">
+							<a href="@Model.Url">@Model.Url</a>
+							 </div>
+					</div>
+					<hr>
+
+					<div class="row ">
+						<div class="col-sm-6 ">Notes</div>
+						<div class="col-sm-6 ">@Model.Note</div>
+					</div>
+					<hr>
+
+					<div class="col-sm-2">
+					</div>
+				</div>
+			</div>
+
+			<div class="row text-center">
+				<div class="col-sm-12">
+					<a class="btn btn-primary" href="/company/update/@Model.PublisherId">Update</a>
+				</div>
+			</div>
+		</div>
+
+		@*	@await Html.PartialAsync("footer")*@
+
+
+	</div>
+	<style>
+		a.btn.btn-primary {
+			margin-bottom: 1em;
+		}
+	</style>
+
+</body>
+</html>

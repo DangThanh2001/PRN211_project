@@ -24,7 +24,7 @@ namespace ProductManager.Logics
                 s = s.Trim();
                 return context.Products.Where(x => x.ProductName.ToLower().Contains(s.ToLower())
                 || x.Publishing.Name.ToLower().Contains(s.ToLower())
-                
+
                 ).ToList();
             }
         }
@@ -33,12 +33,12 @@ namespace ProductManager.Logics
         {
             context.PublishingHouses.ToList();
 
-            if (s == 1 || s==0)
-                return 
+            if (s == 1 || s == 0)
+                return
             context.Products.Where(x => x.Status == s).ToList();
             else
             {
-                
+
                 return context.Products.ToList();
             }
         }
@@ -114,6 +114,48 @@ namespace ProductManager.Logics
             int a = p.ProductId;
             int? b = p.Quantity;
             context.Products.Update(p);
+            context.SaveChanges();
+        }
+
+        public PublishingHouse getCompany(int s)
+        {
+            try
+            {
+                return context.PublishingHouses.FirstOrDefault(x => x.PublisherId == s);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public void updateCom(PublishingHouse pub)
+        {
+            context.PublishingHouses.Update(pub);
+            context.SaveChanges();
+        }
+
+        public bool isPhone(string s)
+        {
+            s = s.Trim();
+            if (s.Length != 10)
+                return false;
+            if (context.PublishingHouses.FirstOrDefault(x => x.Phone.Equals(s)) is not null)
+                return false;
+            foreach(char a in s)
+			{
+				if (!char.IsDigit(a))
+				{
+                    return false;
+                    break;
+				}
+			}
+            return true;
+        }
+
+        public void addPro(Product pub)
+        {
+            context.Products.Add(pub);
             context.SaveChanges();
         }
     }

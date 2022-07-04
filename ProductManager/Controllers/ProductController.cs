@@ -3,6 +3,7 @@ using ProductManager.Models;
 using ProductManager.Logics;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace ProductManager.Controllers
 {
@@ -104,6 +105,38 @@ namespace ProductManager.Controllers
 			{
                 ViewBag.ok = 1;
                 dao.updateProduct(updatePr);
+                ViewBag.mess = "Your work has done successfully";
+            }
+            ViewBag.pub = dao.showAllCompany("");
+            return View("/views/product/update.cshtml", p);
+        }
+
+        public IActionResult add()
+		{
+            ViewBag.here = "pro";
+            ViewBag.act = "doadd";
+            ViewBag.ok = 1;
+            ViewBag.mess = "Please check your work before you submit";
+            List<PublishingHouse> pub = dao.showAllCompany("");
+            ViewBag.pub = pub;
+            Product p = new Product();
+            p.ImportDate = DateTime.Now;
+            return View("/views/product/update.cshtml", p);
+        }
+
+        public IActionResult doadd(Product updatePr)
+        {
+            ViewBag.here = "pro";
+            Product p = updatePr;
+            if (updatePr.Status > 0 && updatePr.Quantity <= 0)
+            {
+                ViewBag.ok = 0;
+                ViewBag.mess = "Your work has something not right... pls check again :< ";
+            }
+            else
+            {
+                ViewBag.ok = 1;
+                dao.addPro(updatePr);
                 ViewBag.mess = "Your work has done successfully";
             }
             ViewBag.pub = dao.showAllCompany("");

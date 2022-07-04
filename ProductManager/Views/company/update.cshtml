@@ -1,0 +1,91 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using ProductManager.Models;
+@model PublishingHouse
+@await Html.PartialAsync("Header")
+
+<body>
+	<div class="container-fluid">
+		<div class="row header">
+			<div class="text-center col-sm-12">
+				<h1>
+					Sunflower
+				</h1>
+			</div>
+		</div>
+
+		@await Html.PartialAsync("Menu")
+		@*my work is here*@
+
+		<div class="row content">
+
+			<div class="col-sm-2"></div>
+			<div class="col-sm-8">
+				@if (ViewBag.ok == 1)
+				{
+					<div class="alert alert-success" id="alertdiv" role="alert">
+						@ViewBag.mess
+					</div>
+				}
+				else
+				{
+					<div class="alert alert-danger" id="alertdiv" role="alert">
+						@ViewBag.mess
+					</div>
+				}
+
+				<form action="/company/doupdate" method="post">
+					<div class="form-group">
+						<input type="hidden" name="comp.PublisherId" value="@Model.PublisherId">
+						<label for="proName">company name:</label>
+						<input type="text" id="proName" class="form-control" placeholder="Company name" required name="comp.Name" value="@Model.Name">
+					</div>
+					<div class="form-group">
+						<label for="quan">Address:</label>
+						<input type="text" id="quan" class="form-control" placeholder="Address" required name="comp.Address" value="@Model.Address">
+						
+					</div>
+					<div class="form-group">
+						<label for="giaGoc">Phone:</label>
+						<input type="text" id="giaGoc" class="form-control" placeholder="Phonenumber"  required name="comp.Phone" value="@Model.Phone" maxlength="10">
+					</div>
+					<div class="form-group">
+						<label for="giaBan">URL:</label>
+						<input type="url" id="giaBan" class="form-control" placeholder="https://example.com" name="comp.Url" value="@Model.Url">
+					</div>
+
+					<div class="form-group">
+						<label for="note">Notes:</label>
+						<textarea name="comp.Note" id="note" class="form-control" maxlength="500">@Model.Note</textarea>
+					</div>
+
+					<button type="submit" class="btn btn-primary">Update</button>
+				</form>
+			</div>
+			<div class="col-sm-2"></div>
+		</div>
+
+		
+		@*@await Html.PartialAsync("footer")*@
+	</div>
+
+	<style>
+		textarea#note {
+			height: 15em;
+		}
+	</style>
+
+	<script type="text/javascript">
+		// close the div in 5 secs
+		window.setTimeout("closeHelpDiv();", 5000);
+
+		function closeHelpDiv(){
+		document.getElementById("alertdiv").style.display=" none";
+		}
+	</script>
+
+</body>
+</html>
