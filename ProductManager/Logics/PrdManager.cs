@@ -158,5 +158,17 @@ namespace ProductManager.Logics
             context.Products.Add(pub);
             context.SaveChanges();
         }
+
+        public Admin login(string u, string p)
+		{
+			try
+			{
+                return context.Admins.FirstOrDefault(x => x.UserName.Equals(u) && x.Password.Equals(p));
+            }
+			catch
+			{
+                return null;
+			}
+		}
     }
 }

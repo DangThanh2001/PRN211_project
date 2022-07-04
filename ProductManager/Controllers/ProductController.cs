@@ -4,6 +4,8 @@ using ProductManager.Logics;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace ProductManager.Controllers
 {
@@ -12,6 +14,12 @@ namespace ProductManager.Controllers
         PrdManager dao = new PrdManager();
         public IActionResult Index(string par1)
         {
+			if (!checkLogin())
+			{
+                ViewBag.mess = "Access Denied".ToUpper();
+                return View("/views/product/login.cshtml", new Admin());
+			}
+                
             ViewBag.here = "pro";
             List<Product> products = dao.getALlProduct(par1);
             if (string.IsNullOrEmpty(par1))
@@ -25,6 +33,12 @@ namespace ProductManager.Controllers
 
         public IActionResult detail(int par1)
         {
+            if (!checkLogin())
+            {
+                ViewBag.mess = "Access Denied".ToUpper();
+                return View("/views/product/login.cshtml", new Admin());
+            }
+
             ViewBag.here = "pro";
             Product p = dao.viewProduct(par1);
             List<Category> cat = dao.viewCategoryByPro(par1);
@@ -35,6 +49,12 @@ namespace ProductManager.Controllers
 
         public IActionResult status(int par1)
         {
+            if (!checkLogin())
+            {
+                ViewBag.mess = "Access Denied".ToUpper();
+                return View("/views/product/login.cshtml", new Admin());
+            }
+
             Product pr = dao.viewProduct(par1);
             dao.changeStatus(par1);
             List<Product> products = dao.getALlProduct(pr.ProductName);
@@ -45,6 +65,12 @@ namespace ProductManager.Controllers
 
         public IActionResult quantity(Product upPro)
         {
+            if (!checkLogin())
+            {
+                ViewBag.mess = "Access Denied".ToUpper();
+                return View("/views/product/login.cshtml", new Admin());
+            }
+
             Product pr = dao.viewProduct(upPro.ProductId);
             pr.Quantity = upPro.Quantity;
             if(pr.Quantity > 0)
@@ -69,6 +95,12 @@ namespace ProductManager.Controllers
 
         public IActionResult listStatus(int par1)
         {
+            if (!checkLogin())
+            {
+                ViewBag.mess = "Access Denied".ToUpper();
+                return View("/views/product/login.cshtml", new Admin());
+            }
+
             ViewBag.here = "pro";
             ViewBag.seacrh = "";
             ViewBag.stt = par1;
@@ -83,6 +115,12 @@ namespace ProductManager.Controllers
 
         public IActionResult update(int par1)
         {
+            if (!checkLogin())
+            {
+                ViewBag.mess = "Access Denied".ToUpper();
+                return View("/views/product/login.cshtml", new Admin());
+            }
+
             ViewBag.here = "pro";
             ViewBag.ok = 1;
             ViewBag.mess = "Please check your work before you submit";
@@ -94,6 +132,12 @@ namespace ProductManager.Controllers
 
         public IActionResult doupdate(Product updatePr)
         {
+            if (!checkLogin())
+            {
+                ViewBag.mess = "Access Denied".ToUpper();
+                return View("/views/product/login.cshtml", new Admin());
+            }
+
             ViewBag.here = "pro";
             Product p = updatePr;
             if (updatePr.Status > 0 && updatePr.Quantity <= 0)
@@ -113,6 +157,12 @@ namespace ProductManager.Controllers
 
         public IActionResult add()
 		{
+            if (!checkLogin())
+            {
+                ViewBag.mess = "Access Denied".ToUpper();
+                return View("/views/product/login.cshtml", new Admin());
+            }
+
             ViewBag.here = "pro";
             ViewBag.act = "doadd";
             ViewBag.ok = 1;
@@ -126,6 +176,12 @@ namespace ProductManager.Controllers
 
         public IActionResult doadd(Product updatePr)
         {
+            if (!checkLogin())
+            {
+                ViewBag.mess = "Access Denied".ToUpper();
+                return View("/views/product/login.cshtml", new Admin());
+            }
+
             ViewBag.here = "pro";
             Product p = updatePr;
             if (updatePr.Status > 0 && updatePr.Quantity <= 0)
@@ -142,5 +198,47 @@ namespace ProductManager.Controllers
             ViewBag.pub = dao.showAllCompany("");
             return View("/views/product/update.cshtml", p);
         }
+
+        public IActionResult login()
+		{
+            return View(new Admin());
+		}
+
+        public IActionResult dologin(Admin adm)
+        {
+            Admin ad = dao.login(adm.UserName, adm.Password);
+            if(ad is null)
+			{
+                ViewBag.mess = "Check you input again please";
+                return View("views/product/login.cshtml", adm);
+            }
+			else
+			{
+                string user = JsonConvert.SerializeObject(ad);
+                HttpContext.Session.SetString("user", user);
+                return RedirectToAction("index");
+            }
+        }
+
+        public IActionResult logout()
+		{
+            if (!checkLogin())
+            {
+                ViewBag.mess = "Access Denied".ToUpper();
+                return View("/views/product/login.cshtml", new Admin());
+            }
+
+            HttpContext.Session.Remove("user");
+            return RedirectToAction("login");
+		}
+
+        public bool checkLogin()
+		{
+            string? user = HttpContext.Session.GetString("user");
+            if (string.IsNullOrEmpty(user))
+                return false;
+            else
+                return true;
+		}
     }
 }
