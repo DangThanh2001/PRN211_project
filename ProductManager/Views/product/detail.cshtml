@@ -64,7 +64,7 @@
 					<hr>
 					<div class="row ">
 						<div class="col-sm-6 ">Import date</div>
-						<div class="col-sm-6 ">@Model.ImportDate.ToString("dd/MM/yyyy")</div>
+						<div class="col-sm-6 ">@Model.ImportDate?.ToString("dd/MM/yyyy")</div>
 					</div>
 					<hr>
 					<div class="row ">
@@ -79,7 +79,7 @@
 					<hr>
 					<div class="row ">
 						<div class="col-sm-6 ">Publisher</div>
-						<div class="col-sm-6 "><a href="/company/detail/@Model.PublisherId">@Model.Publishing.Name</a></div>
+						<div class="col-sm-6 "><a href="/company/detail/@Model.PublisherId">@Model.Publisher.Name</a></div>
 					</div>
 					<hr>
 				</div>

@@ -1,4 +1,5 @@
 ﻿using ProductManager.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,7 +24,7 @@ namespace ProductManager.Logics
             {
                 s = s.Trim();
                 return context.Products.Where(x => x.ProductName.ToLower().Contains(s.ToLower())
-                || x.Publishing.Name.ToLower().Contains(s.ToLower())
+                || x.Publisher.Name.ToLower().Contains(s.ToLower())
 
                 ).ToList();
             }
@@ -170,5 +171,34 @@ namespace ProductManager.Logics
                 return null;
 			}
 		}
+
+        public List<Category> showAllCat()
+        {
+            return context.Categories.ToList();
+        }
+
+        public List<ProductCategory> getAllCatOfPro(int id = 0)
+        {
+            return context.ProductCategories.Where(x => x.ProId == id).ToList();
+        }
+
+        public void updateCatPro(int proId, List<string> listCate)
+        {
+            context.ProductCategories.ToList();
+            List<ProductCategory> list = context.ProductCategories.Where(x => x.ProId == proId).ToList();
+            foreach(ProductCategory cat in list)
+            {
+                context.ProductCategories.Remove(cat);
+                context.SaveChanges();
+            }
+            foreach(string s in listCate)
+            {
+                ProductCategory p = new ProductCategory();
+                p.ProId = proId;
+                p.CatId = Convert.ToInt32(s);
+                context.ProductCategories.Add(p);
+                context.SaveChanges();
+            }
+        }
     }
 }

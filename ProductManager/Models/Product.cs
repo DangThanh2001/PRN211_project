@@ -14,9 +14,9 @@ namespace ProductManager.Models
         public double? SellPrice { get; set; }
         public byte? Status { get; set; }
         public string Notes { get; set; }
-        public DateTime ImportDate { get; set; }
+        public DateTime? ImportDate { get; set; }
         public int PublisherId { get; set; }
 
-        public virtual PublishingHouse Publishing { get; set; }
+        public virtual PublishingHouse Publisher { get; set; }
     }
 }

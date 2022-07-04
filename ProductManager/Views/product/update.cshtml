@@ -60,7 +60,7 @@
 					</div>
 					<div class="form-group">
 						<label for="date">Import date:</label>
-						<input type="date" id="date" class="form-control" required name="updatePr.ImportDate" value="@Model.ImportDate.ToString("yyyy-MM-dd")">
+						<input type="date" id="date" class="form-control" required name="updatePr.ImportDate" value="@Model.ImportDate?.ToString("yyyy-MM-dd")">
 					</div>
 
 					<div class="form-group">
@@ -71,6 +71,18 @@
 								<option value="@item.PublisherId" @(item.PublisherId == Model.PublisherId ? "selected":"")>@item.Name </option>
 							}
 						</select>
+					</div>
+					<div class="form-group">
+						<label for="cat">Category:</label>
+						@foreach (Category o in ViewBag.cat)
+						{
+							<label for="cat@(o.CatId)">
+								<input id="cat@(o.CatId)" name="haha" type="checkbox" value="@o.CatId" 
+									@foreach(ProductCategory k in ViewBag.catPr){
+										if (o.CatId == k.CatId)
+											@ViewBag.check
+									}/>@o.CatName</label>
+						}
 					</div>
 
 					<div class="form-group">
@@ -102,4 +114,4 @@
 	</script>
 
 </body>
-</html>
+	</html>

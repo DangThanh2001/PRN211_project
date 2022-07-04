@@ -14,12 +14,12 @@ namespace ProductManager.Controllers
         PrdManager dao = new PrdManager();
         public IActionResult Index(string par1)
         {
-			if (!checkLogin())
-			{
+            if (!checkLogin())
+            {
                 ViewBag.mess = "Access Denied".ToUpper();
                 return View("/views/product/login.cshtml", new Admin());
-			}
-                
+            }
+
             ViewBag.here = "pro";
             List<Product> products = dao.getALlProduct(par1);
             if (string.IsNullOrEmpty(par1))
@@ -43,7 +43,7 @@ namespace ProductManager.Controllers
             Product p = dao.viewProduct(par1);
             List<Category> cat = dao.viewCategoryByPro(par1);
             ViewBag.cate = cat;
-            ViewBag.IDate = p.ImportDate.ToString("dd/MM/yyyy");
+            ViewBag.IDate = p.ImportDate?.ToString("dd/MM/yyyy");
             return View(p);
         }
 
@@ -73,18 +73,18 @@ namespace ProductManager.Controllers
 
             Product pr = dao.viewProduct(upPro.ProductId);
             pr.Quantity = upPro.Quantity;
-            if(pr.Quantity > 0)
+            if (pr.Quantity > 0)
             {
                 dao.updateProduct(pr);
             }
-            if(pr.Quantity == 0)
+            if (pr.Quantity == 0)
             {
                 pr.Status = 0;
                 dao.updateProduct(pr);
             }
-            if(pr.Quantity < 0)
+            if (pr.Quantity < 0)
             {
-                
+
                 return RedirectToAction("index", "product");
             }
             List<Product> products = dao.getALlProduct(pr.ProductName);
@@ -127,6 +127,9 @@ namespace ProductManager.Controllers
             List<PublishingHouse> pub = dao.showAllCompany("");
             ViewBag.pub = pub;
             Product p = dao.viewProduct(par1);
+            ViewBag.cat = dao.showAllCat();
+            ViewBag.catPr = dao.getAllCatOfPro(par1);
+            ViewBag.check = "checked";
             return View(p);
         }
 
@@ -135,28 +138,43 @@ namespace ProductManager.Controllers
             if (!checkLogin())
             {
                 ViewBag.mess = "Access Denied".ToUpper();
-                return View("/views/product/login.cshtml", new Admin());
+                 return View("/views/product/login.cshtml", new Admin());
             }
 
             ViewBag.here = "pro";
             Product p = updatePr;
             if (updatePr.Status > 0 && updatePr.Quantity <= 0)
-			{
+            {
                 ViewBag.ok = 0;
                 ViewBag.mess = "Your work has something not right... pls check again :< ";
-			}
-			else
-			{
+            }
+            else
+            {
                 ViewBag.ok = 1;
                 dao.updateProduct(updatePr);
                 ViewBag.mess = "Your work has done successfully";
             }
             ViewBag.pub = dao.showAllCompany("");
+            ViewBag.cat = dao.showAllCat();
+            ViewBag.catPr = dao.getAllCatOfPro(updatePr.ProductId);
+            ViewBag.check = "checked";
+            string a = Request.Form["haha"];
+            List<string> list = new List<string>();
+            if (!string.IsNullOrEmpty(a))
+            {
+                string[] words = a.Split(' ');
+                foreach (string w in words)
+                {
+                    list.Add(w);
+                }
+               // dao.updateCatPro(updatePr.ProductId, list);
+            }
+            
             return View("/views/product/update.cshtml", p);
         }
 
         public IActionResult add()
-		{
+        {
             if (!checkLogin())
             {
                 ViewBag.mess = "Access Denied".ToUpper();
@@ -171,6 +189,9 @@ namespace ProductManager.Controllers
             ViewBag.pub = pub;
             Product p = new Product();
             p.ImportDate = DateTime.Now;
+            ViewBag.cat = dao.showAllCat();
+            ViewBag.catPr = dao.getAllCatOfPro();
+            ViewBag.check = "checked";
             return View("/views/product/update.cshtml", p);
         }
 
@@ -195,25 +216,28 @@ namespace ProductManager.Controllers
                 dao.addPro(updatePr);
                 ViewBag.mess = "Your work has done successfully";
             }
+            ViewBag.cat = dao.showAllCat();
+            ViewBag.catPr = dao.getAllCatOfPro();
+            ViewBag.check = "checked";
             ViewBag.pub = dao.showAllCompany("");
             return View("/views/product/update.cshtml", p);
         }
 
         public IActionResult login()
-		{
+        {
             return View(new Admin());
-		}
+        }
 
         public IActionResult dologin(Admin adm)
         {
             Admin ad = dao.login(adm.UserName, adm.Password);
-            if(ad is null)
-			{
+            if (ad is null)
+            {
                 ViewBag.mess = "Check you input again please";
                 return View("views/product/login.cshtml", adm);
             }
-			else
-			{
+            else
+            {
                 string user = JsonConvert.SerializeObject(ad);
                 HttpContext.Session.SetString("user", user);
                 return RedirectToAction("index");
@@ -221,7 +245,7 @@ namespace ProductManager.Controllers
         }
 
         public IActionResult logout()
-		{
+        {
             if (!checkLogin())
             {
                 ViewBag.mess = "Access Denied".ToUpper();
@@ -230,15 +254,15 @@ namespace ProductManager.Controllers
 
             HttpContext.Session.Remove("user");
             return RedirectToAction("login");
-		}
+        }
 
         public bool checkLogin()
-		{
+        {
             string? user = HttpContext.Session.GetString("user");
             if (string.IsNullOrEmpty(user))
                 return false;
             else
                 return true;
-		}
+        }
     }
 }
