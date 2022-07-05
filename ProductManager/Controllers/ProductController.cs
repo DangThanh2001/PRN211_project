@@ -245,7 +245,16 @@ namespace ProductManager.Controllers
 
         public IActionResult login()
         {
-            return View(new Admin());
+            Admin a = new Admin();
+            string user = Request.Cookies["username"];
+            string pass = Request.Cookies["password"];
+            if(!string.IsNullOrEmpty(user))
+                a.UserName = user;
+            if(!string.IsNullOrEmpty(pass))
+                a.Password = pass;
+            string? checkbox = Request.Cookies["rem"];
+            ViewBag.rem = checkbox;
+            return View(a);
         }
 
         public IActionResult dologin(Admin adm)
@@ -260,6 +269,16 @@ namespace ProductManager.Controllers
             {
                 string user = JsonConvert.SerializeObject(ad);
                 HttpContext.Session.SetString("user", user);
+                // chay cookie 
+                string? remember = Request.Form["rem"];
+                if (string.IsNullOrEmpty(remember))
+                    remember = "";
+                if (remember.Equals("true"))
+                {
+                    Response.Cookies.Append("rem", "checked");
+                    Response.Cookies.Append("username", adm.UserName);
+                    Response.Cookies.Append("password", adm.Password);
+                }
                 return RedirectToAction("index");
             }
         }

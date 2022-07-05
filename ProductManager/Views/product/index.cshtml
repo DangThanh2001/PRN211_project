@@ -13,38 +13,38 @@
 		<div class="row header">
 
 			<div class="text-center col-sm-12">
-			<a href="/product/index" class="text-dark"><h1>Sunflower</h1></a>
+				<h1>Sunflower</h1>
 			</div>
 		</div>
-		
+
 		@await Html.PartialAsync("Menu")
 
-		<div class="row context">
+		<div class="row">
 			<div class="col-sm-1">
 			</div>
 			<div class="col-sm-10 row">
 				<div class="col-sm-3">
 					<strong><i>Publisher</i></strong>
-					<form action="/product/index" method="post" >
+					<form action="/product/index" method="post">
 						<select name="par1" class="custom-select" onchange="this.form.submit()">
-						<option value="">View all</option>
-						@foreach(PublishingHouse o in ViewBag.allCom)
-						{
-							<option value="@o.Name" @(ViewBag.seacrh.Equals(o.Name) ? "selected" : "")>@o.Name</option>
-						}
-					</select>
+							<option value="">View all</option>
+							@foreach (PublishingHouse o in ViewBag.allCom)
+							{
+								<option value="@o.Name" @(ViewBag.seacrh.Equals(o.Name) ? "selected" : "")>@o.Name</option>
+							}
+						</select>
 					</form>
-					
+
 				</div>
 				<div class="col-sm-3">
 					<strong><i>Status</i></strong>
-					<form action="/product/listStatus" method="post" >
+					<form action="/product/listStatus" method="post">
 						<select name="par1" class="custom-select" onchange="this.form.submit()">
-						<option value="5">View all</option>
-						<option value="0">Waiting</option>
-						<option value="1">Ready</option>
-						
-					</select>
+							<option value="5">View all</option>
+							<option value="0">Waiting</option>
+							<option value="1">Ready</option>
+
+						</select>
 					</form>
 				</div>
 				<div class="col-sm-4"></div>
@@ -54,7 +54,6 @@
 				</div>
 			</div>
 			<div class="col-sm-1">
-				
 			</div>
 
 		</div>
@@ -77,7 +76,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@if(Model.Count == 0)
+							@if (Model.Count == 0)
 							{
 								<tr>
 									<td colspan="7" class="text-center">
@@ -88,54 +87,54 @@
 							else
 							{
 								@foreach (Product o in Model)
-							{
-								<tr>
-									<td scope="row"><a class="text-info" href="/Product/detail/@o.ProductId">@o.ProductName</a></td>
-									<td>
-										<form action="/product/quantity/@o.ProductId" method="post">
-											<div class="input-group mb-3">
-												<input type="hidden" name="upPro.ProductId" value="@o.ProductId">
-												<input type="number" class="form-control"
+								{
+									<tr>
+										<td scope="row"><a class="text-info" href="/Product/detail/@o.ProductId">@o.ProductName</a></td>
+										<td>
+											<form action="/product/quantity/@o.ProductId" method="post">
+												<div class="input-group mb-3">
+													<input type="hidden" name="upPro.ProductId" value="@o.ProductId">
+													<input type="number" class="form-control"
 												   name="UpPro.Quantity" value="@o.Quantity" aria-label=""
 												   aria-describedby="basic-addon2" min="0" max="9999999"
 												   @(o.Status == 0 ? "readonly" : "")>
 
-												<div class="input-group-append">
-													@if (o.Status == 1)
-													{
-														<input type="submit" class="btn btn-outline-success my-2 my-sm-0"
+													<div class="input-group-append">
+														@if (o.Status == 1)
+														{
+															<input type="submit" class="btn btn-outline-success my-2 my-sm-0"
 													   value="Enter" id="basic-addon2">
-													}
+														}
 
+													</div>
 												</div>
-											</div>
 
-										</form>
+											</form>
 
-									</td>
-									<td>@o.OriginalPrice $</td>
-									<td>@o.SellPrice $</td>
-									<td>
-										<span class="@(o.Status == 1 ? "badge badge-success" : "badge badge-danger")">
-											@(o.Status == 1 ? "Ready" : "Waiting")
-										</span>
+										</td>
+										<td>@o.OriginalPrice $</td>
+										<td>@o.SellPrice $</td>
+										<td>
+											<span class="@(o.Status == 1 ? "badge badge-success" : "badge badge-danger")">
+												@(o.Status == 1 ? "Ready" : "Waiting")
+											</span>
 
-									</td>
-									<td><a href="/company/detail/@o.PublisherId">@o.Publisher.Name</a></td>
-									<td>
-										<a class="text-info" href="/Product/detail/@o.ProductId">Details</a>
-										<br>
-										<a class="text-info" href="/Product/update/@o.ProductId">Update</a>
-										<br>
-										@if (o.Quantity > 0)
-										{
-											<a class="@(o.Status == 1 ? "text-danger" : "text-success")" href="/product/status/@o.ProductId">Change status</a>
-										}
-									</td>
-								</tr>
+										</td>
+										<td><a href="/company/detail/@o.PublisherId">@o.Publisher.Name</a></td>
+										<td>
+											<a class="text-info" href="/Product/detail/@o.ProductId">Details</a>
+											<br>
+											<a class="text-info" href="/Product/update/@o.ProductId">Update</a>
+											<br>
+											@if (o.Quantity > 0)
+											{
+												<a class="@(o.Status == 1 ? "text-danger" : "text-success")" href="/product/status/@o.ProductId">Change status</a>
+											}
+										</td>
+									</tr>
+								}
 							}
-							}
-							
+
 
 						</tbody>
 					</table>

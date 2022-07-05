@@ -19,7 +19,9 @@
 				<li class="nav-item">
 					<a class="nav-link @(ViewBag.here.Equals("comp") ? "text-secondary":"")" href="/company/index">Company</a>
 				</li>
-
+				<li class="nav-item">
+					<a class="nav-link @(ViewBag.here.Equals("tag") ? "text-secondary":"")" href="/category/index">Category</a>
+				</li>
 
 				<li class="nav-item">
 					@if (ViewBag.here.Equals("pro"))
@@ -42,7 +44,16 @@
 							</form>
 						</div>
 					}
-
+					@if (ViewBag.here.Equals("tag"))
+					{
+						<div class="float-right">
+							<form class="form-inline" action="/category/index" method="post">
+								<input type="hidden" />
+								<input class="form-control mr-sm-2" name="par1" type="search" value="@ViewBag.seacrh" placeholder="Search" aria-label="Search">
+								<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+							</form>
+						</div>
+					}
 				</li>
 				@*<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -57,7 +57,7 @@
 
 						<div class="form-group">
 							<label for="rem">
-								<input type="checkbox" id="rem">Remeber me
+								<input type="checkbox" id="rem" value="true" name="rem" @ViewBag.rem>Remeber me
 							</label>
 						</div>
 						@if (ViewBag.mess is not null)
@@ -82,12 +82,18 @@
 			<div class="col-sm-1"></div>
 		</div>
 	</div>
+
 	<style>
 		.text-center.optional {
 			margin-top: 1em;
 		}
-		.errorM{
+
+		.errorM {
 			margin-bottom: 1em;
+		}
+
+		form {
+			margin: 3rem 0rem;
 		}
 	</style>
 </body>

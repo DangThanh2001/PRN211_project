@@ -215,5 +215,33 @@ namespace ProductManager.Logics
                 }
             }
         }
+
+        public List<Category> allCategory(string s = "")
+        {
+            if(string.IsNullOrEmpty(s))
+                return context.Categories.ToList();
+            else
+                return context.Categories.Where( x=> x.CatName.ToLower().Contains(s.ToLower().Trim())
+                || x.CatNote.ToLower().Contains(s.ToLower().Trim())).ToList();
+        }
+
+        public void deleteCat(int id)
+        {
+            Category cat = context.Categories.FirstOrDefault(x => x.CatId == id);
+            if(cat != null)
+            {
+                List<ProductCategory> list = context.ProductCategories.Where(x => x.CatId == cat.CatId).ToList();
+                if(list.Count > 0)
+                {
+                    foreach(ProductCategory cat2 in list)
+                    {
+                        context.ProductCategories.Remove(cat2);
+                        context.SaveChanges();
+                    }
+                }
+                context.Categories.Remove(cat);
+                context.SaveChanges();
+            }
+        }
     }
 }

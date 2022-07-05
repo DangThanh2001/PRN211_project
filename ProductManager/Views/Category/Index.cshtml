@@ -1,0 +1,111 @@
+﻿@using ProductManager.Models
+@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Category>
+@await Html.PartialAsync("Header")
+
+<body>
+	<div class="container-fluid">
+		<div class="row header">
+			<div class="text-center col-sm-12">
+				<h1>
+					Sunflower
+				</h1>
+			</div>
+		</div>
+
+		@await Html.PartialAsync("Menu")
+		@*my work is here*@
+		<div class="row">
+			<div class="col-sm-1"></div>
+			<div class="col-sm-10 row">
+				<div class="col-sm-10"></div>
+				<div class="col-sm-2">
+					<br>
+					<a class="btn btn-outline-primary my-2 my-sm-0 float-right" href="/category/add">Add more category</a>
+				</div>
+			</div>
+			<div class="col-sm-1"></div>
+		</div>
+
+		<div class="row content">
+			<div class="col-sm-1"></div>
+			<div class="col-sm-10">
+				<div class="alert alert-warning" role="alert">
+					@ViewBag.mess
+				</div>
+				<div>
+					<table class="table table-striped ">
+						<thead>
+							<tr>
+								<th scope="col">Category Name</th>
+								<th scope="col">Category Description</th>
+								<th scope="col">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							@if (Model.Count == 0)
+							{
+								<tr>
+									<td colspan="7" class="text-center">
+										<i>No records found...</i>
+									</td>
+								</tr>
+							}
+							else
+							{
+								@foreach (Category o in Model)
+								{
+									<tr>
+										<td scope="row">@o.CatName</td>
+										<td scope="row">@o.CatNote</td>
+
+										<td>
+											<a class="text-info" href="/category/update/@o.CatId">Update</a>
+											<br>
+											<a class="text-info" data-toggle="modal" data-target="#Cat@(o.CatId)" href="#">Delete</a>
+										</td>
+									</tr>
+								}
+							}
+
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col-sm-1"></div>
+		</div>
+
+		@foreach (Category o in Model)
+		{
+			<div class="modal fade" id="Cat@(o.CatId)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title text-danger" id="exampleModalLabel">Warning!!!</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							@ViewBag.mess
+						</div>
+						<div class="modal-footer">
+							<a type="button" class="btn btn-secondary" data-dismiss="modal">Close</a>
+							<a type="button" class="btn btn-primary" href="/category/delete/@o.CatId">Save changes</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+		<!-- Modal -->
+		@*@await Html.PartialAsync("footer")*@
+	</div>
+
+
+</body>
+</html>
