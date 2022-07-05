@@ -155,21 +155,25 @@ namespace ProductManager.Controllers
                 ViewBag.mess = "Your work has done successfully";
             }
             ViewBag.pub = dao.showAllCompany("");
-            ViewBag.cat = dao.showAllCat();
-            ViewBag.catPr = dao.getAllCatOfPro(updatePr.ProductId);
-            ViewBag.check = "checked";
-            string a = Request.Form["haha"];
+            string a = Request.Form["cate"];
             List<string> list = new List<string>();
             if (!string.IsNullOrEmpty(a))
             {
-                string[] words = a.Split(' ');
+                string[] words = a.Split(',');
                 foreach (string w in words)
                 {
-                    list.Add(w);
+                    list.Add(w.Trim());
                 }
-               // dao.updateCatPro(updatePr.ProductId, list);
+                dao.updateCatPro(updatePr.ProductId, list);
             }
-            
+            else
+            {
+                dao.deleteCatPro(updatePr.ProductId);
+            }
+            ViewBag.cat = dao.showAllCat();
+            ViewBag.catPr = dao.getAllCatOfPro(updatePr.ProductId);
+            ViewBag.check = "checked";
+
             return View("/views/product/update.cshtml", p);
         }
 
@@ -216,8 +220,24 @@ namespace ProductManager.Controllers
                 dao.addPro(updatePr);
                 ViewBag.mess = "Your work has done successfully";
             }
+            string a = Request.Form["cate"];
+            List<string> list = new List<string>();
+            if (!string.IsNullOrEmpty(a))
+            {
+                string[] words = a.Split(',');
+                foreach (string w in words)
+                {
+                    list.Add(w.Trim());
+                }
+                dao.updateCatPro(updatePr.ProductId, list);
+            }
+            else
+            {
+             //   dao.deleteCatPro(updatePr.ProductId);
+            }
+
             ViewBag.cat = dao.showAllCat();
-            ViewBag.catPr = dao.getAllCatOfPro();
+            ViewBag.catPr = dao.getAllCatOfPro(updatePr.ProductId);
             ViewBag.check = "checked";
             ViewBag.pub = dao.showAllCompany("");
             return View("/views/product/update.cshtml", p);

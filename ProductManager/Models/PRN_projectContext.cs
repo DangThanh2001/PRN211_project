@@ -94,29 +94,15 @@ namespace ProductManager.Models
 
             modelBuilder.Entity<ProductCategory>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.ProCatId);
 
                 entity.ToTable("Product_Category");
 
+                entity.Property(e => e.ProCatId).HasColumnName("ProCatID");
+
                 entity.Property(e => e.CatId).HasColumnName("CatID");
 
-                entity.Property(e => e.ProCatId)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("ProCatID");
-
                 entity.Property(e => e.ProId).HasColumnName("ProID");
-
-                entity.HasOne(d => d.Cat)
-                    .WithMany()
-                    .HasForeignKey(d => d.CatId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Product_Category_Category");
-
-                entity.HasOne(d => d.ProCat)
-                    .WithMany()
-                    .HasForeignKey(d => d.ProCatId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Product_Category_Product");
             });
 
             modelBuilder.Entity<PublishingHouse>(entity =>

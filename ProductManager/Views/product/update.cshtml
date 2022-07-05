@@ -77,7 +77,7 @@
 						@foreach (Category o in ViewBag.cat)
 						{
 							<label for="cat@(o.CatId)">
-								<input id="cat@(o.CatId)" name="haha" type="checkbox" value="@o.CatId" 
+								<input id="cat@(o.CatId)" name="cate" type="checkbox" value="@o.CatId" 
 									@foreach(ProductCategory k in ViewBag.catPr){
 										if (o.CatId == k.CatId)
 											@ViewBag.check

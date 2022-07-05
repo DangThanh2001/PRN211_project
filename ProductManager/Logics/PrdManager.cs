@@ -200,5 +200,20 @@ namespace ProductManager.Logics
                 context.SaveChanges();
             }
         }
+
+        public void deleteCatPro(int proId)
+        {
+            context.ProductCategories.ToList();
+            Product p = viewProduct(proId);
+            if(p is not null)
+            {
+                List<ProductCategory> list = context.ProductCategories.Where(x => x.ProId == proId).ToList();
+                foreach(ProductCategory cat in list)
+                {
+                    context.ProductCategories.Remove(cat);
+                    context.SaveChanges();
+                }
+            }
+        }
     }
 }
