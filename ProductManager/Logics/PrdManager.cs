@@ -243,5 +243,23 @@ namespace ProductManager.Logics
                 context.SaveChanges();
             }
         }
+
+        public Category getCat(int id)
+        {
+            try
+            {
+                return context.Categories.FirstOrDefault(x => x.CatId == id);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public void updateCate(Category c)
+        {
+            context.Categories.Update(c);
+            context.SaveChanges();
+        }
     }
 }

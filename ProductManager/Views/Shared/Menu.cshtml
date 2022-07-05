@@ -68,13 +68,36 @@
 			</ul>
 		</div>
 		<div class="float-right">
+			<div class="dropdown">
+				<a class="dropdown-item" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span class="material-symbols-outlined">
+						person
+					</span>
+					@ViewBag.user
+				</a>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="#">
+						<span class="material-symbols-outlined">
+							account_circle
+						</span>Account
+					</a>
 
-			<a href="/product/logout" class="btn btn-outline-info my-2 my-sm-0">
-				<span class="material-symbols-outlined">
-					account_circle
-				</span>
-				Log out
-			</a>
+					<a class="dropdown-item" href="#">
+						<span class="material-symbols-outlined">
+							lock
+						</span>Change Password
+					</a>
+
+					<a href="/product/logout" class="dropdown-item">
+						<span class="material-symbols-outlined">
+							logout
+						</span>
+						Log out
+					</a>
+				</div>
+			</div>
+
+
 		</div>
 	</div>
 </nav>
@@ -88,7 +111,7 @@
 		margin: 3em 0px;
 	}
 
-	a.btn.btn-outline-info.my-2.my-sm-0 {
+	a.dropdown-item {
 		display: flex;
 	}
 

@@ -19,7 +19,7 @@ namespace ProductManager.Controllers
                 ViewBag.mess = "Access Denied".ToUpper();
                 return View("/views/product/login.cshtml", new Admin());
             }
-
+            ViewBag.user = getUserName();
             ViewBag.here = "pro";
             List<Product> products = dao.getALlProduct(par1);
             if (string.IsNullOrEmpty(par1))
@@ -39,6 +39,7 @@ namespace ProductManager.Controllers
                 return View("/views/product/login.cshtml", new Admin());
             }
 
+            ViewBag.user = getUserName();
             ViewBag.here = "pro";
             Product p = dao.viewProduct(par1);
             List<Category> cat = dao.viewCategoryByPro(par1);
@@ -55,6 +56,7 @@ namespace ProductManager.Controllers
                 return View("/views/product/login.cshtml", new Admin());
             }
 
+            ViewBag.user = getUserName();
             Product pr = dao.viewProduct(par1);
             dao.changeStatus(par1);
             List<Product> products = dao.getALlProduct(pr.ProductName);
@@ -71,6 +73,7 @@ namespace ProductManager.Controllers
                 return View("/views/product/login.cshtml", new Admin());
             }
 
+            ViewBag.user = getUserName();
             Product pr = dao.viewProduct(upPro.ProductId);
             pr.Quantity = upPro.Quantity;
             if (pr.Quantity > 0)
@@ -101,6 +104,7 @@ namespace ProductManager.Controllers
                 return View("/views/product/login.cshtml", new Admin());
             }
 
+            ViewBag.user = getUserName();
             ViewBag.here = "pro";
             ViewBag.seacrh = "";
             ViewBag.stt = par1;
@@ -121,6 +125,7 @@ namespace ProductManager.Controllers
                 return View("/views/product/login.cshtml", new Admin());
             }
 
+            ViewBag.user = getUserName();
             ViewBag.here = "pro";
             ViewBag.ok = 1;
             ViewBag.mess = "Please check your work before you submit";
@@ -141,6 +146,7 @@ namespace ProductManager.Controllers
                  return View("/views/product/login.cshtml", new Admin());
             }
 
+            ViewBag.user = getUserName();
             ViewBag.here = "pro";
             Product p = updatePr;
             if (updatePr.Status > 0 && updatePr.Quantity <= 0)
@@ -185,6 +191,7 @@ namespace ProductManager.Controllers
                 return View("/views/product/login.cshtml", new Admin());
             }
 
+            ViewBag.user = getUserName();
             ViewBag.here = "pro";
             ViewBag.act = "doadd";
             ViewBag.ok = 1;
@@ -207,6 +214,7 @@ namespace ProductManager.Controllers
                 return View("/views/product/login.cshtml", new Admin());
             }
 
+            ViewBag.user = getUserName();
             ViewBag.here = "pro";
             Product p = updatePr;
             if (updatePr.Status > 0 && updatePr.Quantity <= 0)
@@ -302,6 +310,18 @@ namespace ProductManager.Controllers
                 return false;
             else
                 return true;
+        }
+
+        public string getUserName()
+		{
+            string? user = HttpContext.Session.GetString("user");
+            if (string.IsNullOrEmpty(user))
+                return "";
+			else
+			{
+                Admin ad = JsonConvert.DeserializeObject<Admin>(user);
+                return ad.FullName;
+			}
         }
     }
 }

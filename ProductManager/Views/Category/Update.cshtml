@@ -1,0 +1,76 @@
+﻿@using ProductManager.Models
+@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Category
+@await Html.PartialAsync("Header")
+
+<body>
+	<div class="container-fluid">
+		<div class="row header">
+			<div class="text-center col-sm-12">
+				<h1>
+					Sunflower
+				</h1>
+			</div>
+		</div>
+
+		@await Html.PartialAsync("Menu")
+		@*my work is here*@
+		<div class="row content">
+
+			<div class="col-sm-2"></div>
+			<div class="col-sm-8">
+				@if (ViewBag.ok == 1)
+				{
+					<div class="alert alert-success text-center" id="alertdiv" role="alert">
+						@ViewBag.mess
+					</div>
+				}
+				else
+				{
+					<div class="alert alert-danger" id="alertdiv" role="alert">
+						@ViewBag.mess
+					</div>
+				}
+
+				<form action="/category/@(ViewBag.act == null ? "doupdate":"doadd")" method="post">
+					<div class="form-group">
+						<input type="hidden" name="upCat.CatId" value="@Model.CatId">
+						<label for="proName">Category name:</label>
+						<input type="text" id="proName" class="form-control" placeholder="Category name" required name="upCat.CatName" value="@Model.CatName">
+					</div>
+
+					<div class="form-group">
+						<label for="note">Descriptions:</label>
+						<textarea name="upCat.CatNote" id="note" class="form-control">@Model.CatNote</textarea>
+					</div>
+
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</form>
+			</div>
+			<div class="col-sm-2"></div>
+		</div>
+
+		@*@await Html.PartialAsync("footer")*@
+	</div>
+
+	<style>
+		textarea#note {
+			height: 15em;
+		}
+	</style>
+
+	<script type="text/javascript">
+		// close the div in 5 secs
+		window.setTimeout("closeHelpDiv();", 5000);
+
+		function closeHelpDiv(){
+		document.getElementById("alertdiv").style.display=" none";
+		}
+	</script>
+
+</body>
+</html>

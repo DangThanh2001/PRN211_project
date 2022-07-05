@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using ProductManager.Logics;
 using ProductManager.Models;
 using System.Collections.Generic;
@@ -19,6 +20,17 @@ namespace ProductManager.Controllers
                 return true;
         }
 
+        public string getUserName()
+        {
+            string? user = HttpContext.Session.GetString("user");
+            if (string.IsNullOrEmpty(user))
+                return "";
+            else
+            {
+                Admin ad = JsonConvert.DeserializeObject<Admin>(user);
+                return ad.FullName;
+            }
+        }
         public IActionResult Index(string par1)
         {
             if (!checkLogin())
@@ -27,6 +39,7 @@ namespace ProductManager.Controllers
                 return View("/views/product/login.cshtml", new Admin());
             }
 
+            ViewBag.user = getUserName();
             ViewBag.here = "comp";
             List<PublishingHouse> a = dao.showAllCompany(par1);
             return View(a);
@@ -40,6 +53,7 @@ namespace ProductManager.Controllers
                 return View("/views/product/login.cshtml", new Admin());
             }
 
+            ViewBag.user = getUserName();
             ViewBag.here = "comp";
             PublishingHouse a = dao.getCompany(par1);
             return View(a);
@@ -53,6 +67,7 @@ namespace ProductManager.Controllers
                 return View("/views/product/login.cshtml", new Admin());
             }
 
+            ViewBag.user = getUserName();
             ViewBag.here = "comp";
             ViewBag.ok = 1;
             ViewBag.mess = "Please check your work before you save";
@@ -68,6 +83,7 @@ namespace ProductManager.Controllers
                 return View("/views/product/login.cshtml", new Admin());
             }
 
+            ViewBag.user = getUserName();
             ViewBag.here = "comp";
             if (!string.IsNullOrEmpty(comp.Note))
             {
@@ -96,6 +112,7 @@ namespace ProductManager.Controllers
                 return View("/views/product/login.cshtml", new Admin());
             }
 
+            ViewBag.user = getUserName();
             ViewBag.here = "comp";
             ViewBag.ok = 1;
             ViewBag.mess = "Please check your work before you save";
@@ -111,6 +128,7 @@ namespace ProductManager.Controllers
                 return View("/views/product/login.cshtml", new Admin());
             }
 
+            ViewBag.user = getUserName();
             ViewBag.here = "comp";
             if (!string.IsNullOrEmpty(comp.Note))
             {
