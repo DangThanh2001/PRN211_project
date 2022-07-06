@@ -52,7 +52,7 @@ namespace ProductManager
             {
                 endpoints.MapControllerRoute(
                     name: "p2",
-                    pattern: "{controller=Product}/{action=Index}/{par1}/{par2}"
+                    pattern: "{controller}/{action}/{par1}/{par2}"
                     );
             });
         }

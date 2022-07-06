@@ -12,7 +12,7 @@ namespace ProductManager.Controllers
     public class ProductController : Controller
     {
         PrdManager dao = new PrdManager();
-        public IActionResult Index(string par1)
+        public IActionResult Index(string par1 = "all", int par2=0)
         {
             if (!checkLogin())
             {
@@ -21,10 +21,24 @@ namespace ProductManager.Controllers
             }
             ViewBag.user = getUserName();
             ViewBag.here = "pro";
-            List<Product> products = dao.getALlProduct(par1);
-            if (string.IsNullOrEmpty(par1))
-                par1 = "";
-            ViewBag.seacrh = par1;
+
+            if (par2 <= 0)
+                ViewBag.curPage = 1;
+            else if (par2 > paging(par1))
+            {
+                par2 = paging(par1);
+                ViewBag.curPage = par2;
+            }
+            else
+                ViewBag.curPage = par2;
+
+            List<Product> products = dao.getALlProduct(par1).Skip((par2 - 1) * 5).Take(5).ToList();
+
+            if (String.IsNullOrEmpty(par1))
+                ViewBag.seacrh = "all";
+            else
+                ViewBag.seacrh = par1;
+            ViewBag.allPage = paging(par1);
 
             List<PublishingHouse> allCom = dao.showAllCompany("");
             ViewBag.allCom = allCom;
@@ -143,7 +157,7 @@ namespace ProductManager.Controllers
             if (!checkLogin())
             {
                 ViewBag.mess = "Access Denied".ToUpper();
-                 return View("/views/product/login.cshtml", new Admin());
+                return View("/views/product/login.cshtml", new Admin());
             }
 
             ViewBag.user = getUserName();
@@ -241,7 +255,7 @@ namespace ProductManager.Controllers
             }
             else
             {
-             //   dao.deleteCatPro(updatePr.ProductId);
+                //   dao.deleteCatPro(updatePr.ProductId);
             }
 
             ViewBag.cat = dao.showAllCat();
@@ -256,9 +270,9 @@ namespace ProductManager.Controllers
             Admin a = new Admin();
             string user = Request.Cookies["username"];
             string pass = Request.Cookies["password"];
-            if(!string.IsNullOrEmpty(user))
+            if (!string.IsNullOrEmpty(user))
                 a.UserName = user;
-            if(!string.IsNullOrEmpty(pass))
+            if (!string.IsNullOrEmpty(pass))
                 a.Password = pass;
             string? checkbox = Request.Cookies["rem"];
             ViewBag.rem = checkbox;
@@ -313,15 +327,26 @@ namespace ProductManager.Controllers
         }
 
         public string getUserName()
-		{
+        {
             string? user = HttpContext.Session.GetString("user");
             if (string.IsNullOrEmpty(user))
                 return "";
-			else
-			{
+            else
+            {
                 Admin ad = JsonConvert.DeserializeObject<Admin>(user);
                 return ad.FullName;
-			}
+            }
+        }
+
+        public int paging(string par1)
+        {
+            List<Product> products = dao.getALlProduct(par1);
+            int page;
+            if (products.Count % 5 == 0)
+                page = products.Count / 5;
+            else
+                page = products.Count / 5 + 1;
+            return page;
         }
     }
 }

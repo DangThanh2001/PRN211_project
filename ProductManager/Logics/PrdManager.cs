@@ -17,16 +17,13 @@ namespace ProductManager.Logics
         public List<Product> getALlProduct(string s)
         {
             context.PublishingHouses.ToList();
-
-            if (string.IsNullOrEmpty(s))
+            if (s.ToLower().Equals("all"))
                 return context.Products.ToList();
             else
             {
                 s = s.Trim();
                 return context.Products.Where(x => x.ProductName.ToLower().Contains(s.ToLower())
-                || x.Publisher.Name.ToLower().Contains(s.ToLower())
-
-                ).ToList();
+                || x.Publisher.Name.ToLower().Contains(s.ToLower())).ToList();
             }
         }
 

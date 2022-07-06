@@ -134,10 +134,21 @@
 									</tr>
 								}
 							}
-
-
 						</tbody>
 					</table>
+				</div>
+				<div class="float-right">
+					@*chỗ này để làm phân trang*@
+					<form action="/product/index" method="post">
+						<div class="d-flex p-2">
+							<input type="hidden" value="@ViewBag.seacrh" name="par1" />
+							<label for="num">
+							<input class="form-control" id="num" onchange="this.form.submit()"
+								   type="number" value="@ViewBag.curPage" name="par2" required min="1" max="@ViewBag.allPage" />
+							</label>
+							<div />
+					</form>
+
 				</div>
 			</div>
 			<div class="col-sm-1">
