@@ -77,3 +77,4 @@ F:\PRN211\ProjectPRN211\ProductManager\obj\Debug\net5.0\Razor\Views\product\logi
 F:\PRN211\ProjectPRN211\ProductManager\obj\Debug\net5.0\Razor\Views\Category\Index.cshtml.g.cs
 F:\PRN211\ProjectPRN211\ProductManager\obj\Debug\net5.0\Razor\Views\Category\Update.cshtml.g.cs
 F:\PRN211\ProjectPRN211\ProductManager\obj\Debug\net5.0\Razor\Views\User\profile.cshtml.g.cs
+F:\PRN211\ProjectPRN211\ProductManager\obj\Debug\net5.0\Razor\Views\User\password.cshtml.g.cs

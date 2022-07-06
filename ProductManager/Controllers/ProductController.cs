@@ -22,6 +22,8 @@ namespace ProductManager.Controllers
             ViewBag.user = getUserName();
             ViewBag.here = "pro";
 
+            if(string.IsNullOrEmpty(par1))
+                par1 = "all";
             if (par2 <= 0)
                 ViewBag.curPage = 1;
             else if (par2 > paging(par1))

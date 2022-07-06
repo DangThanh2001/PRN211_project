@@ -139,16 +139,31 @@
 				</div>
 				<div class="float-right">
 					@*chỗ này để làm phân trang*@
-					<form action="/product/index" method="post">
-						<div class="d-flex p-2">
-							<input type="hidden" value="@ViewBag.seacrh" name="par1" />
-							<label for="num">
-							<input class="form-control" id="num" onchange="this.form.submit()"
-								   type="number" value="@ViewBag.curPage" name="par2" required min="1" max="@ViewBag.allPage" />
-							</label>
-							<div />
-					</form>
+					<div class="d-flex flex-row"">
+						<div class="p-2">
+							@if (ViewBag.curPage != 1)
+							{
+								<a href="/product/index/@ViewBag.seacrh/@(ViewBag.curPage-1)">Prev</a>
+							}
+						</div>
 
+						<div class="p-2">
+							<form action="/product/index" method="post">
+								<input type="hidden" value="@ViewBag.seacrh" name="par1" />
+								<label for="num">
+									<input class="form-control text-center" id="num" onchange="this.form.submit()"
+										   type="number" value="@ViewBag.curPage" name="par2" required min="1" max="@ViewBag.allPage" />
+								</label
+							</form>
+						</div>
+
+						<div class="p-2">
+							@if (ViewBag.curPage != @ViewBag.allPage)
+							{
+								<a href="/product/index/@ViewBag.seacrh/@(ViewBag.curPage+1)">Next</a>
+							}
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="col-sm-1">
@@ -156,7 +171,13 @@
 		</div>
 
 		@*	@await Html.PartialAsync("footer")*@
-
+		<style>
+		.d-flex {
+    display: -ms-flexbox!important;
+    display: flex!important;
+    align-items: baseline;
+}
+		</style>
 	</div>
 
 </body>

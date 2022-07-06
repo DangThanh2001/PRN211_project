@@ -258,5 +258,12 @@ namespace ProductManager.Logics
             context.Categories.Update(c);
             context.SaveChanges();
         }
+
+        public void changePass(Admin a, string NewPass)
+		{
+            a.Password = NewPass;
+            context.Admins.Update(a);
+            context.SaveChanges();
+		}
     }
 }
