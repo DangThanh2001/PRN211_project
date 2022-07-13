@@ -77,11 +77,12 @@
 						@foreach (Category o in ViewBag.cat)
 						{
 							<label for="cat@(o.CatId)">
-								<input id="cat@(o.CatId)" name="cate" type="checkbox" value="@o.CatId" 
-									@foreach(ProductCategory k in ViewBag.catPr){
-										if (o.CatId == k.CatId)
-											@ViewBag.check
-									}/>@o.CatName</label>
+								<input id="cat@(o.CatId)" name="cate" type="checkbox" value="@o.CatId"
+								   @foreach(ProductCategory k in ViewBag.catPr){
+								   if (o.CatId == k.CatId)
+								   @ViewBag.check
+								   } />@o.CatName
+							</label>
 						}
 					</div>
 
@@ -102,7 +103,13 @@
 		textarea#note {
 			height: 15em;
 		}
+
+		label {
+			width: calc(100%/5);
+		}
 	</style>
+
+
 
 	<script type="text/javascript">
 		// close the div in 5 secs

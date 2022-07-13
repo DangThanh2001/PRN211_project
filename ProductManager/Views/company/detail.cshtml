@@ -21,7 +21,7 @@
 
 		@await Html.PartialAsync("Menu")
 		@*my work is here*@
-		<div class="container-fluid container-sm">
+		<div class="">
 			<div class="row content">
 				<div class="col-sm-2">
 				</div>
@@ -29,7 +29,6 @@
 					<div class="row ">
 						<div class="col-sm-6 ">Company name</div>
 						<div class="col-sm-6 ">@Model.Name</div>
-
 					</div>
 					<hr>
 					<div class="row ">
@@ -47,7 +46,7 @@
 						<div class="col-sm-6 ">Url</div>
 						<div class="col-sm-6 ">
 							<a href="@Model.Url">@Model.Url</a>
-							 </div>
+						</div>
 					</div>
 					<hr>
 
@@ -56,8 +55,19 @@
 						<div class="col-sm-6 ">@Model.Note</div>
 					</div>
 					<hr>
-
-					<div class="col-sm-2">
+				</div>
+				<div class="col-sm-2">
+					<div class="text-center">
+						Product of this company:
+					</div>
+					<div>
+						<ul>
+							@foreach (Product o in ViewBag.list)
+							{
+							<a href="/product/detail/@o.ProductId">@o.ProductName</a>	
+								<hr >
+							}
+						</ul>
 					</div>
 				</div>
 			</div>

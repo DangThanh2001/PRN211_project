@@ -26,10 +26,10 @@ namespace ProductManager.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            string ConStr = config.GetConnectionString("StudentConstr");
             if (!optionsBuilder.IsConfigured)
             {
-                var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-                string ConStr = config.GetConnectionString("StudentConstr");
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer(ConStr);
             }
@@ -49,17 +49,13 @@ namespace ProductManager.Models
 
                 entity.Property(e => e.FullName).HasMaxLength(20);
 
-                entity.Property(e => e.Password)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.Password).HasMaxLength(50);
 
                 entity.Property(e => e.Phone)
                     .HasMaxLength(10)
                     .IsFixedLength(true);
 
-                entity.Property(e => e.UserName)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.UserName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Category>(entity =>
@@ -81,15 +77,16 @@ namespace ProductManager.Models
 
                 entity.Property(e => e.ImportDate).HasColumnType("datetime");
 
-                entity.Property(e => e.ProductName).HasMaxLength(50);
+                entity.Property(e => e.ProductName)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.PublisherId).HasColumnName("PublisherID");
 
                 entity.HasOne(d => d.Publisher)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.PublisherId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Product__Publish__4AB81AF0");
+                    .HasConstraintName("FK_Product_Publishing_House");
             });
 
             modelBuilder.Entity<ProductCategory>(entity =>
@@ -103,6 +100,16 @@ namespace ProductManager.Models
                 entity.Property(e => e.CatId).HasColumnName("CatID");
 
                 entity.Property(e => e.ProId).HasColumnName("ProID");
+
+                entity.HasOne(d => d.Cat)
+                    .WithMany(p => p.ProductCategories)
+                    .HasForeignKey(d => d.CatId)
+                    .HasConstraintName("FK_Product_Category_Category");
+
+                entity.HasOne(d => d.Pro)
+                    .WithMany(p => p.ProductCategories)
+                    .HasForeignKey(d => d.ProId)
+                    .HasConstraintName("FK_Product_Category_Product");
             });
 
             modelBuilder.Entity<PublishingHouse>(entity =>

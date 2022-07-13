@@ -53,6 +53,9 @@ namespace ProductManager.Controllers
                 return View("/views/product/login.cshtml", new Admin());
             }
 
+            List<Product> list = dao.proOfCompany(par1);
+            ViewBag.list = list;
+
             ViewBag.user = getUserName();
             ViewBag.here = "comp";
             PublishingHouse a = dao.getCompany(par1);

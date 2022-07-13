@@ -64,7 +64,7 @@ namespace ProductManager.Controllers
             return View(p);
         }
 
-        public IActionResult status(int par1)
+        public IActionResult status(int par1, string par2)
         {
             if (!checkLogin())
             {
@@ -78,7 +78,11 @@ namespace ProductManager.Controllers
             List<Product> products = dao.getALlProduct(pr.ProductName);
             ViewBag.here = "pro";
             ViewBag.seacrh = pr.ProductName;
-            return RedirectToAction("index", "product");
+
+            List<PublishingHouse> allCom = dao.showAllCompany("");
+            ViewBag.allCom = allCom;
+
+            return View("/views/product/index.cshtml", products);
         }
 
         public IActionResult quantity(Product upPro)

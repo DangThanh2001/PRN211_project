@@ -265,5 +265,10 @@ namespace ProductManager.Logics
             context.Admins.Update(a);
             context.SaveChanges();
 		}
+
+        public List<Product> proOfCompany(int id)
+        {
+            return context.Products.Where(x => x.PublisherId == id).ToList();
+        }
     }
 }

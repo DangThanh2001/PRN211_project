@@ -7,6 +7,11 @@ namespace ProductManager.Models
 {
     public partial class Product
     {
+        public Product()
+        {
+            ProductCategories = new HashSet<ProductCategory>();
+        }
+
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public int? Quantity { get; set; }
@@ -15,8 +20,9 @@ namespace ProductManager.Models
         public byte? Status { get; set; }
         public string Notes { get; set; }
         public DateTime? ImportDate { get; set; }
-        public int PublisherId { get; set; }
+        public int? PublisherId { get; set; }
 
         public virtual PublishingHouse Publisher { get; set; }
+        public virtual ICollection<ProductCategory> ProductCategories { get; set; }
     }
 }
